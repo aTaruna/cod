@@ -1,27 +1,12 @@
-KEDUA
+http {
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Profil Mahasiswa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    limit_req_zone $binary_remote_addr zone=rate_limit_zone:10m rate=6r/m;
 
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center w-96">
-        <h1 class="text-2xl font-bold mb-4 text-gray-800">
-            Data Mahasiswa
-        </h1>
+    include       mime.types;
+    default_type  application/octet-stream;
 
-        <p class="text-lg text-gray-700">
-            <span class="font-semibold">Nama:</span> <%= nama %>
-        </p>
+    access_log  /var/log/nginx/access.log;
+    error_log   /var/log/nginx/error.log;
 
-        <p class="text-lg text-gray-700 mt-2">
-            <span class="font-semibold">NIM:</span> <%= nim %>
-        </p>
-    </div>
-
-</body>
-</html>
+    include /etc/nginx/sites-enabled/*.conf;
+}
